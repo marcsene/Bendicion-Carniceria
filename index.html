@@ -209,7 +209,7 @@
                 </div>
             </div>
             <div class="bg-white px-6 py-3 border-t border-gray-200 flex justify-between items-center text-xs text-gray-500">
-                <span>Los cambios se guardan automáticamente en tu navegador.</span>
+                <span>Sincronización automática activa.</span>
                 <button onclick="resetDefaultProducts()" class="text-brandRed hover:underline font-bold">Restablecer catálogo por defecto</button>
             </div>
         </div>
@@ -275,6 +275,8 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        const STORAGE_KEY = "bendicion_master_products_v6";
+
         const defaultProducts = [
             { id: 1, name: "Chuleta de Cerdo Fresca", category: "carnes", price: 4790, boxPrice: 22500, unit: "Kg", inStock: true, image: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=600&q=80" },
             { id: 2, name: "Chuleta Centro de Cerdo", category: "carnes", price: 4690, boxPrice: 22000, unit: "Kg", inStock: true, image: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=600&q=80" },
@@ -321,7 +323,7 @@
         });
 
         function loadProducts() {
-            const saved = localStorage.getItem("bendicion_products_v5");
+            const saved = localStorage.getItem(STORAGE_KEY);
             if (saved) {
                 try {
                     products = JSON.parse(saved);
@@ -335,7 +337,7 @@
         }
 
         function saveProductsToStorage() {
-            localStorage.setItem("bendicion_products_v5", JSON.stringify(products));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
         }
 
         function resetDefaultProducts() {
@@ -595,7 +597,6 @@
                 products.push({ id: newId, name, category, unit, price, boxPrice, image, inStock });
             }
             
-            // Guarda los cambios instantáneamente en la aplicación del navegador
             saveProductsToStorage();
             renderProducts();
             renderAdminTable();
